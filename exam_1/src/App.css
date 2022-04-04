@@ -1,0 +1,21 @@
+.App {
+  background-color: #000;
+}
+
+h2 {
+  color: #f00;
+}
+
+#bold_text {
+  color: #5f2;
+}
+
+p {
+  color: #f09;
+}
+
+button {
+  padding: 1ps5px 1px 5px;
+  margin: 5px;
+  border: 2px solid #e67575;
+}
