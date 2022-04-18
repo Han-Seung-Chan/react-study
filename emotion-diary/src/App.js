@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 import Home from './pages/Home';
 import Diary from './pages/Diary';
@@ -14,12 +14,10 @@ const reducer = (state, action) => {
     case 'INIT': {
       return action.data;
     }
-    case 'CREATE':
-      {
-        const newItem = [action.data, ...state];
-        newState = [newItem, ...state];
-      }
+    case 'CREATE': {
+      newState = [action.data, ...state];
       break;
+    }
 
     case 'REMOVE': {
       newState = state.filter((it) => it.id !== action.targetId);
@@ -35,24 +33,32 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem('diary', JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  { id: 1, emotion: 1, content: '오늘 일기 1번', date: 1650125930758 },
-  { id: 2, emotion: 2, content: '오늘 일기 2번', date: 1650125930759 },
-  { id: 3, emotion: 3, content: '오늘 일기 3번', date: 1650125930760 },
-  { id: 4, emotion: 4, content: '오늘 일기 4번', date: 1650125930761 },
-  { id: 5, emotion: 5, content: '오늘 일기 5번', date: 1650125930762 },
-];
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData);
+  const [data, dispatch] = useReducer(reducer, []);
 
-  const dataId = useRef(0);
+  useEffect(() => {
+    const localData = localStorage.getItem('diary');
+
+    if (!localData) return;
+
+    const diaryList = JSON.parse(localData).sort(
+      (a, b) => parseInt(b.id) - parseInt(a.id)
+    );
+
+    if (diaryList.length === 0) return;
+
+    dataId.current = parseInt(diaryList[0].id + 1);
+
+    dispatch({ type: 'INIT', data: diaryList });
+  });
+  const dataId = useRef(1);
   //CREATE
   const onCreate = (date, content, emotion) => {
     dispatch({
@@ -98,7 +104,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/new" element={<New />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
               <Route path="/diary/:id" element={<Diary />} />
             </Routes>
           </div>

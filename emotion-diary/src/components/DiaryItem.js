@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-
 import { useNavigate } from 'react-router-dom';
 import MyButton from './MyButton';
 
@@ -24,7 +22,11 @@ const DiaryItem = ({ id, emotion, content, date }) => {
         ].join(' ')}
         onClick={goDetailDiary}
       >
-        <img src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`} />
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img
+          src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`}
+          alt="감정 이모티콘"
+        />
       </div>
       <div className="info_wrapper" onClick={goDetailDiary}>
         <div className="diary_date">{strDate}</div>

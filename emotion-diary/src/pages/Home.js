@@ -5,6 +5,12 @@ import { DiaryStateContext } from '../App';
 import DiaryList from '../components/DiaryList';
 
 const Home = () => {
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0];
+
+    titleElement.innerHTML = `Diary made by khan`;
+  });
+
   const diaryList = useContext(DiaryStateContext);
 
   const [data, setData] = useState([]);
@@ -22,7 +28,10 @@ const Home = () => {
     const lastDay = new Date(
       curDate.getFullYear(),
       curDate.getMonth() + 1,
-      0
+      0,
+      23,
+      59,
+      59
     ).getTime();
 
     setData(
@@ -32,9 +41,7 @@ const Home = () => {
     );
   }, [diaryList, curDate]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   const increaseMonth = () => {
     setCurDate(
