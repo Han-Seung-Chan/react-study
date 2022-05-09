@@ -7,9 +7,9 @@ import GnbInfo from './GnbInfo';
 const Gnb = () => {
   return (
     <NavBox>
-      <NavListBox>
+      <GnbListBox>
         <GnbInfo />
-      </NavListBox>
+      </GnbListBox>
     </NavBox>
   );
 };
@@ -19,7 +19,7 @@ const NavBox = styled.nav`
   width: 100%;
 `;
 
-const NavListBox = styled.ul`
+const GnbListBox = styled.ul`
   ${flexCenter}
   width: 720px;
   margin: 0 auto;

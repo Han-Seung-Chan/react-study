@@ -17,17 +17,17 @@ const GnbInfo = () => {
   return (
     <>
       {gnbInfo.map((img) => (
-        <NavList key={img.alt} alt={img.alt}>
-          <NavBtn>
+        <GnbList key={img.alt} alt={img.alt}>
+          <GnbBtn>
             <Img url={img.url} description={img.alt} />
-          </NavBtn>
-        </NavList>
+          </GnbBtn>
+        </GnbList>
       ))}
     </>
   );
 };
 
-const NavList = styled.li`
+const GnbList = styled.li`
   flex: auto;
   text-align: center;
   padding: 30px 0 15px;
@@ -35,7 +35,7 @@ const NavList = styled.li`
   border-bottom: ${({ alt }) => (alt === '웹툰' ? '3px solid #ffd200' : '')};
 `;
 
-const NavBtn = styled.button`
+const GnbBtn = styled.button`
   width: 100%;
 `;
 
